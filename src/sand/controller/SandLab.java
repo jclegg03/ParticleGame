@@ -1,7 +1,9 @@
-package sand.game;
+package sand.controller;
 
 import java.awt.*;
 import java.util.*;
+
+import sand.view.SandDisplay;
 
 public class SandLab
 {

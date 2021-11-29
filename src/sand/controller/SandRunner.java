@@ -1,4 +1,4 @@
-package sand.game;
+package sand.controller;
 
 public class SandRunner
 {

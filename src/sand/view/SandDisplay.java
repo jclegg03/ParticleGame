@@ -1,4 +1,4 @@
-package sand.game;
+package sand.view;
 
 import java.awt.*;
 import java.awt.event.*;
