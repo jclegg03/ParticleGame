@@ -88,10 +88,18 @@ public class SandLab
     //remember that you need to watch for the edges of the array
     int row = (int) (Math.random() * grid.length);
     int col = (int) (Math.random() * grid[row].length);
-    if(row + 1 != grid.length && grid[row][col] == SAND && grid[row + 1][col] == EMPTY)
+    if(row + 1 != grid.length && grid[row][col] == SAND && (grid[row + 1][col] == EMPTY || grid[row + 1][col] == WATER))
     {
-      grid[row][col] = EMPTY;
-      grid[row + 1][col] = SAND;
+      if(grid[row + 1][col] == WATER)
+      {
+        grid[row][col] = WATER;
+        grid[row + 1][col] = SAND;
+      }
+      else
+      {
+        grid[row][col] = EMPTY;
+        grid[row + 1][col] = SAND;
+      }
       return;
     }
     
