@@ -58,7 +58,7 @@ public class SandLab
     	{
     		if(grid[row][col] == METAL)
     		{
-    		display.setColor(row, col, Color.GRAY);
+    			display.setColor(row, col, Color.GRAY);
     		}
     		else if(grid[row][col] == EMPTY)
     		{
@@ -83,9 +83,10 @@ public class SandLab
     //remember that you need to watch for the edges of the array
     int row = (int) (Math.random() * grid.length);
     int col = (int) (Math.random() * grid[row].length);
-    if(grid[row][col] == SAND && grid[row - 1][col] == EMPTY)
+    if(row != grid.length - 1 && grid[row][col] == SAND && grid[row + 1][col] == EMPTY)
     {
-      
+      grid[row][col] = EMPTY;
+      grid[row + 1][col] = SAND;
     }
   }
   
