@@ -13,6 +13,8 @@ public class SandLab
   public static final int METAL = 1;
   public static final int SAND = 2;
   public static final int WATER = 3;
+  public static final int ICE = 4;
+  public static final int ANAKIN = 5;
   //do not add any more fields below
   private int[][] grid;
   private SandDisplay display;
@@ -28,13 +30,14 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[4];
+    names = new String[6];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
     names[SAND] = "Sand";
     names[WATER] = "Water";
-    
+    names[ICE] = "Ice";
+    names[ANAKIN] = "Anakin";
     //1. Add code to initialize the data member grid with same dimensions
    this.grid = new int[numRows][numCols];
     
@@ -67,11 +70,19 @@ public class SandLab
     		}
     		else if(grid[row][col] == SAND)
     		{
-    			display.setColor(row, col, Color.CYAN);
+    			display.setColor(row, col, Color.YELLOW);
     		}
     		else if(grid[row][col] == WATER)
     		{
-    			display.setColor(row, col, Color.WHITE);
+    			display.setColor(row, col, Color.CYAN);
+    		}
+    		else if(grid[row][col] == ICE)
+    		{
+    			display.setColor(row, col, Color.BLUE);
+    		}
+    		else if(grid[row][col] == ANAKIN)
+    		{
+    			display.setColor(row, col, Color.RED);
     		}
     	}
     }
@@ -102,6 +113,18 @@ public class SandLab
       }
       return;
     }
+    else if(row + 1 != grid.length && grid[row][col] == ICE && grid[row + 1][col] == EMPTY)
+    {
+    	grid[row][col] = EMPTY;
+    	grid[row + 1][col] = ICE;
+    	return;
+    }
+    else if(row > 0 && grid[row][col] == ICE && grid[row - 1][col] == WATER)
+    {
+    	grid[row][col] = WATER;
+    	grid[row - 1][col] = ICE;
+    }
+    
     
     int direction = (int) (Math.random() * 4);
     final int STILL = 0;
@@ -132,6 +155,10 @@ public class SandLab
     		grid[row + 1][col] = WATER;
     		return;
     	}
+    }
+    else if(grid[row][col] == ANAKIN)
+    {
+    	//finish later
     }
   }
   
