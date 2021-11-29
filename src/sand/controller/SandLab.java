@@ -69,6 +69,10 @@ public class SandLab
     		{
     			display.setColor(row, col, Color.CYAN);
     		}
+    		else if(grid[row][col] == WATER)
+    		{
+    			display.setColor(row, col, Color.WHITE);
+    		}
     	}
     }
   }
@@ -84,10 +88,42 @@ public class SandLab
     //remember that you need to watch for the edges of the array
     int row = (int) (Math.random() * grid.length);
     int col = (int) (Math.random() * grid[row].length);
-    if(row != grid.length - 1 && grid[row][col] == SAND && grid[row + 1][col] == EMPTY)
+    if(row + 1 != grid.length && grid[row][col] == SAND && grid[row + 1][col] == EMPTY)
     {
       grid[row][col] = EMPTY;
       grid[row + 1][col] = SAND;
+      return;
+    }
+    
+    int direction = (int) (Math.random() * 4);
+    final int STILL = 0;
+    final int RIGHT = 1;
+    final int LEFT = 2;
+    final int DOWN = 3;
+    if(direction == STILL)
+    {
+    	return;
+    }
+    else if(grid[row][col] == WATER)
+    {
+    	if(direction == RIGHT && grid[row].length != col + 1 && grid[row][col + 1] == EMPTY)
+    	{
+    		grid[row][col] = EMPTY;
+    		grid[row][col + 1] = WATER;
+    		return;
+    	}
+    	else if(direction == LEFT && col != 0 && grid[row][col - 1] == EMPTY)
+    	{
+    		grid[row][col] = EMPTY;
+    		grid[row][col - 1] = WATER;
+    		return;
+    	}
+    	else if(direction == DOWN && row != grid.length - 1 && grid[row + 1][col] == EMPTY)
+    	{
+    		grid[row][col] = EMPTY;
+    		grid[row + 1][col] = WATER;
+    		return;
+    	}
     }
   }
   
