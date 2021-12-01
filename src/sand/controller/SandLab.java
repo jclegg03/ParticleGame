@@ -15,6 +15,8 @@ public class SandLab
   public static final int WATER = 3;
   public static final int ICE = 4;
   public static final int ANAKIN = 5;
+  public static final int GAS = 6;
+  public static final int COVID = 7;
   //do not add any more fields below
   private int[][] grid;
   private SandDisplay display;
@@ -30,7 +32,7 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[6];
+    names = new String[8];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
@@ -38,6 +40,8 @@ public class SandLab
     names[WATER] = "Water";
     names[ICE] = "Ice";
     names[ANAKIN] = "Anakin";
+    names[GAS] = "Gas";
+    names[COVID] = "COVID-19";
     //1. Add code to initialize the data member grid with same dimensions
    this.grid = new int[numRows][numCols];
     
@@ -84,6 +88,14 @@ public class SandLab
     		{
     			display.setColor(row, col, Color.RED);
     		}
+    		else if(grid[row][col] == GAS)
+    		{
+    			display.setColor(row, col, Color.GREEN);
+    		}
+    		else if(grid[row][col] == COVID)
+    		{
+    			display.setColor(row, col, Color.MAGENTA);
+    		}
     	}
     }
   }
@@ -99,17 +111,22 @@ public class SandLab
     //remember that you need to watch for the edges of the array
     int row = (int) (Math.random() * grid.length);
     int col = (int) (Math.random() * grid[row].length);
-    if(row + 1 != grid.length && grid[row][col] == SAND && (grid[row + 1][col] == EMPTY || grid[row + 1][col] == WATER))
+    if(row + 1 != grid.length && grid[row][col] == SAND && (grid[row + 1][col] == EMPTY || grid[row + 1][col] == WATER || grid[row + 1][col] == ANAKIN))
     {
       if(grid[row + 1][col] == WATER)
       {
         grid[row][col] = WATER;
         grid[row + 1][col] = SAND;
       }
-      else
+      else if(grid[row + 1][col] == EMPTY)
       {
         grid[row][col] = EMPTY;
         grid[row + 1][col] = SAND;
+      }
+      else if(grid[row + 1][col] == ANAKIN)
+      {
+    	  grid[row][col] = EMPTY;
+    	  grid[row + 1][col] = EMPTY;
       }
       return;
     }
@@ -123,6 +140,26 @@ public class SandLab
     {
     	grid[row][col] = WATER;
     	grid[row - 1][col] = ICE;
+    	return;
+    }
+    else if(row + 1 != grid.length && grid[row][col] == ANAKIN && (grid[row + 1][col] == EMPTY || grid[row + 1][col] == SAND || grid[row + 1][col] == WATER))
+    {
+    	if(grid[row + 1][col] == EMPTY)
+    	{
+    		grid[row][col] = EMPTY;
+    		grid[row + 1][col] = ANAKIN;
+    	}
+    	else if(grid[row + 1][col] == WATER)
+    	{
+    		grid[row][col] = WATER;
+    		grid[row + 1][col] = ANAKIN;
+    	}
+    	else if(grid[row + 1][col] == SAND)
+    	{
+    		grid[row][col] = EMPTY;
+    		grid[row + 1][col] = EMPTY;
+    	}
+    	return;
     }
     
     
@@ -131,7 +168,8 @@ public class SandLab
     final int RIGHT = 1;
     final int LEFT = 2;
     final int DOWN = 3;
-    if(direction == STILL)
+    final int UP = 4;
+    if(direction == STILL && grid[row][col] == WATER)
     {
     	return;
     }
@@ -156,9 +194,82 @@ public class SandLab
     		return;
     	}
     }
-    else if(grid[row][col] == ANAKIN)
+    
+    if(grid[row][col] == GAS)
     {
-    	//finish later
+	    direction = (int) (Math.random() * 5);
+	    if(direction == STILL)
+	    {
+	    	return;
+	    }
+	    else if(direction == RIGHT && col + 1 < grid[row].length)
+	    {
+	    	if(grid[row][col + 1] == EMPTY || grid[row][col + 1] == WATER)
+	    	{
+	    		grid[row][col] = grid[row][col + 1];
+	    		grid[row][col + 1] = GAS;
+	    	}
+	    	return;
+	    }
+	    else if(direction == LEFT && col - 1 >= 0)
+	    {
+	    	if(grid[row][col - 1] == EMPTY || grid[row][col - 1] == WATER)
+	    	{
+	    		grid[row][col] = grid[row][col - 1];
+	    		grid[row][col - 1] = GAS;
+	    	}
+	    	return;
+	    }
+	    else if(direction == DOWN && row + 1 < grid.length)
+	    {
+	    	if(grid[row + 1][col] == EMPTY)
+	    	{
+	    		grid[row + 1][col] = GAS;
+	    		grid[row][col] = EMPTY;
+	    	}
+	    	return;
+	    }
+	    else if(direction == UP && row - 1 >= 0)
+	    {
+	    	if(grid[row - 1][col] == EMPTY)
+	    	{
+	    		grid[row - 1][col] = GAS;
+	    		grid[row][col] = EMPTY;
+	    	}
+	    	else if(grid[row - 1][col] == SAND || grid[row - 1][col] == ANAKIN || grid[row - 1][col] == WATER)
+	    	{
+	    		grid[row][col] = grid[row - 1][col];
+	    		grid[row - 1][col] = GAS;
+	    	}
+	    }
+    }
+    
+    if(grid[row][col] == COVID)
+    {
+    	final int UPDOWN = (int) (Math.random() * 2);
+    	
+    	if(UPDOWN == 0)
+    	{
+    		if(row + 1 < grid.length)
+    		{
+    			grid[row + 1][col] = COVID;
+    		}
+    		if(row - 1 >= 0)
+    		{
+    			grid[row - 1][col] = COVID;
+    		}
+    	}
+    	else if(UPDOWN == 1)
+    	{
+    		if(col + 1 < grid[row].length)
+    		{
+    			grid[row][col + 1] = COVID;
+    		}
+    		if(col - 1 >= 0)
+    		{
+    			grid[row][col - 1] = COVID;
+    		}
+    	}
     }
   }
   
