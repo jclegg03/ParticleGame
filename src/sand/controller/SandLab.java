@@ -252,23 +252,54 @@ public class SandLab
     	{
     		if(row + 1 < grid.length)
     		{
-    			grid[row + 1][col] = COVID;
+    			if(grid[row + 1][col] == COVID)
+    			{
+    				//
+    			}
+    			else
+    			{
+    				grid[row + 1][col] = COVID;
+    			}
     		}
     		if(row - 1 >= 0)
     		{
-    			grid[row - 1][col] = COVID;
+    			if(grid[row - 1][col] == COVID)
+    			{
+    				//
+    			}
+    			else
+    			{
+    				grid[row - 1][col] = COVID;
+    			}
     		}
     	}
     	else if(UPDOWN == 1)
     	{
     		if(col + 1 < grid[row].length)
     		{
-    			grid[row][col + 1] = COVID;
+    			if(grid[row][col + 1] == COVID)
+    			{
+//    				grid[row][col + 1] = COVID;
+    			}
+    			else
+    			{
+    				grid[row][col + 1] = COVID;
+    			}
     		}
     		if(col - 1 >= 0)
     		{
-    			grid[row][col - 1] = COVID;
+    			if(grid[row][col - 1] == COVID)
+    			{
+    				
+    			}
+    			else
+    			{
+    				grid[row][col - 1] = COVID;
+    		
+    			}
+    	
     		}
+    
     	}
     }
   }
