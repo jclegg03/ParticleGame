@@ -9,6 +9,7 @@ public class SandLab
 {
   //Step 4,6
   //add constants for particle types here
+  public static final int HIDDEN = -1;
   public static final int EMPTY = 0;
   public static final int METAL = 1;
   public static final int SAND = 2;
@@ -95,6 +96,10 @@ public class SandLab
     		else if(grid[row][col] == COVID)
     		{
     			display.setColor(row, col, Color.MAGENTA);
+    		}
+    		else if(grid[row][col] == HIDDEN)
+    		{
+    			display.setColor(row, col, new Color(252, 144, 3));
     		}
     	}
     }
@@ -254,7 +259,7 @@ public class SandLab
     		{
     			if(grid[row + 1][col] == COVID)
     			{
-    				//
+    				grid[row + 1][col] = HIDDEN;
     			}
     			else
     			{
@@ -265,7 +270,7 @@ public class SandLab
     		{
     			if(grid[row - 1][col] == COVID)
     			{
-    				//
+    				grid[row - 1][col] = HIDDEN;
     			}
     			else
     			{
@@ -279,7 +284,7 @@ public class SandLab
     		{
     			if(grid[row][col + 1] == COVID)
     			{
-//    				grid[row][col + 1] = COVID;
+    				grid[row][col + 1] = HIDDEN;
     			}
     			else
     			{
@@ -290,7 +295,7 @@ public class SandLab
     		{
     			if(grid[row][col - 1] == COVID)
     			{
-    				
+    				grid[row][col - 1] = HIDDEN;
     			}
     			else
     			{
